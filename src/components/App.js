@@ -9,6 +9,7 @@ import Login from "./Login";
 import Dashboard from "./Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import ForgetPassword from "./ForgetPassword";
+import UpdateProfile from "./UpdateProfile";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <AuthProvider>
               <Routes>
                 <Route path="/" element={ <PrivateRoute> <Dashboard /></PrivateRoute>}></Route>
+                <Route path="/update-profile" element={ <PrivateRoute> <UpdateProfile /></PrivateRoute>}></Route>
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forget-password" element={<ForgetPassword />} />
