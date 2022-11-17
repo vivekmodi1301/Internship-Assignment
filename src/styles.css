@@ -1,0 +1,16 @@
+i {
+    position: absolute;
+    top: 64%;
+    right: 10%;
+  }
+  i:hover {
+    color: #0d6efd;
+    cursor: pointer;
+  }
+  
+  button {
+    width: 300px;
+    height: 50px;
+    margin: 0 auto;
+  }
+  

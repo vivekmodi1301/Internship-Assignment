@@ -1,6 +1,5 @@
 // import logo from './logo.svg';
 // import './App.css';
-
 import { Container } from "react-bootstrap";
 import AuthProvider from "../contexts/AuthContext";
 import Signup from "./Signup";

@@ -2,6 +2,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/messaging';
 import 'firebase/compat/firestore';
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 // const app = firebase.initializeApp({
 //   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -24,5 +25,7 @@ let config = {
     appId : "1:95409650432:web:cad377841deaa6c84d11e5"
 };
 const app = firebase.initializeApp(config);
+const db = getFirestore(app);
 export const auth = app.auth()
 export default firebase;
+export { db };

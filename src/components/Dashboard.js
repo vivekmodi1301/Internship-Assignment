@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card , Alert } from 'react-bootstrap'
 import { NavLink, useNavigate } from 'react-router-dom';
 import {useAuth} from "../contexts/AuthContext"
+import userDataService from "../Services/crudFirebase"
 
 export default function Dashboard() {
   const[error , setError] = useState("");
@@ -16,14 +17,32 @@ export default function Dashboard() {
       setError("Failed to log out");
     }
   }
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    const data = await userDataService.getAllUsers();
+    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
   return (
     <>
       <Card>
         <Card.Body>
           <h2 className='text-center mb-4'>Profile</h2>
-          {error && <Alert variant='danger'>{error}</Alert>}
-          <strong>Email:</strong> {currentUser && currentUser.email}
-          <NavLink to="/update-profile" className="btn btn-primary w-100 mt-3">Update Profile</NavLink>
+          { users.map((doc, index) => {
+            if(doc.email === currentUser.email) {
+              return (
+                <>
+                <strong>Name:</strong> {doc.name} <br />
+                <strong>Email:</strong> {doc.email} <br />
+                <strong>Contact:</strong> {doc.contact} <br />
+                <NavLink to="/update-profile" className="btn btn-primary w-100 mt-3">Update Profile</NavLink>
+                </>
+              )
+            }
+            }) }
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
