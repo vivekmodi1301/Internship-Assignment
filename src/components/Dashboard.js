@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import {useAuth} from "../contexts/AuthContext"
 import userDataService from "../Services/crudFirebase"
 
-export default function Dashboard() {
+export default function Dashboard({getUserId}) {
   const[error , setError] = useState("");
   const {currentUser , logout} = useAuth();
   const history = useNavigate();
@@ -24,7 +24,7 @@ export default function Dashboard() {
 
   const getUsers = async () => {
     const data = await userDataService.getAllUsers();
-    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id})));
   };
   return (
     <>
@@ -38,7 +38,8 @@ export default function Dashboard() {
                 <strong>Name:</strong> {doc.name} <br />
                 <strong>Email:</strong> {doc.email} <br />
                 <strong>Contact:</strong> {doc.contact} <br />
-                <NavLink to="/update-profile" className="btn btn-primary w-100 mt-3">Update Profile</NavLink>
+                <strong>ID:</strong> {doc.id} <br />
+                <NavLink to="/update-profile" className="btn btn-primary w-100 mt-3" onClick={(e) => getUserId(doc.id)}>Update Profile</NavLink>
                 </>
               )
             }

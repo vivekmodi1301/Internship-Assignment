@@ -1,9 +1,14 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Card , Form , Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext';
 import { NavLink , useNavigate} from 'react-router-dom';
+import userDataService from "../Services/crudFirebase"
+import { db } from "../firebase";
+import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { getDatabase, ref, child, push, update } from "firebase/database";
 
-export default function UpdateProfile() {
+
+export default function UpdateProfile({ id, setUserId }) {
     const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -12,44 +17,70 @@ export default function UpdateProfile() {
     const {currentUser , updatePassword , updateEmail} = useAuth();
     const [error ,setError] = useState();
     const [loading , setLoading] = useState(false);
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [contact, setContact] = useState("")
     const history = useNavigate();
-    function handleSubmit(e){
+    const database = getDatabase();
+    const [users, setUsers] = useState([]);
+    async function submitHandler(e) {
+
         e.preventDefault()
-        
-        if(passwordRef.current.value !== passwordConfirmRef.current.value){
-            return setError('Passwords do not match')
+    
+        const newUser = {
+            name,
+            email,
+            contact
+        };
+    
+        setLoading(true);
+    
+        await userDataService.updateUser(id, newUser);
+        setUserId("")
+        setLoading(false);
+        alert("Updated the profile!");
+        history('/')
+      }
+    
+      const editHandler = async () => {
+        setError("");
+        try {
+          const docSnap = await userDataService.getUser(id);
+          console.log("the record is :", docSnap.data());
+          setName(docSnap.data().name);
+          setEmail(docSnap.data().email);
+          setContact(docSnap.data().contact);
+        } catch (err) {
+          setError(err.message);
         }
-
-        const promises = []
-        setLoading(true)
-        setError("")
-        if(emailRef.current.value !== currentUser.email){
-            promises.push(updateEmail(emailRef.current.value))
+      };
+    
+      useEffect(() => {
+        if (id !== undefined && id !== "") {
+            editHandler();
         }
-        if(passwordRef.current.value){
-            promises.push(updatePassword(passwordRef.current.value))
-        }
-
-        Promise.all(promises).then(()=>{
-            history('/')
-        }).catch(()=>{
-            setError('Failed to update account')
-        }).finally(()=>{
-            setLoading(false)
-        })
-    }
+      }, [id])
     return (
     <>
         <Card>
             <Card.Body>
                 <h2 className='text-center mb-4'>Update Profile</h2>
                 {error && <Alert variant='danger'>{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={submitHandler}>
+                    <Form.Group id="email">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control type="text" value={name} required ref={nameRef} onChange={(e) => setName(e.target.value)}/>
+                    </Form.Group>
+                    
                     <Form.Group id="email">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" required ref={emailRef} defaultValue={currentUser.email}/>
+                        <Form.Control type="email" required ref={emailRef} defaultValue={currentUser.email} placeholder={currentUser.email} disabled/>
                     </Form.Group>
-
+ 
+                    <Form.Group id="contact">
+                        <Form.Label>Contact</Form.Label>
+                        <Form.Control type="contact" ref={contactRef} value={contact} onChange={(e) => setContact(e.target.value)}/>
+                    </Form.Group>
                     <Form.Group id="password">
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" ref={passwordRef} autoComplete="off" placeholder='Leave Blank to keep the same'/>

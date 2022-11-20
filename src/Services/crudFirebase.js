@@ -9,12 +9,12 @@ class userDataService {
     };
 
     updateUser = (id, updatedUser) => {
-        const userDoc = doc(db, "users", id);
+        const userDoc = doc(db, "Users-Info", id);
         return updateDoc(userDoc, updatedUser);
     };
 
     deleteUser = (id) => {
-        const userDoc = doc(db, "users", id);
+        const userDoc = doc(db, "Users-Info", id);
         return deleteDoc(userDoc);
     };
 
@@ -23,7 +23,7 @@ class userDataService {
     };
 
     getUser = (id) => {
-        const userDoc = doc(db, "users", id);
+        const userDoc = doc(db, "Users-Info", id);
         return getDoc(userDoc);
     };
 }
