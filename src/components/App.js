@@ -10,6 +10,7 @@ import PrivateRoute from "./PrivateRoute";
 import ForgetPassword from "./ForgetPassword";
 import UpdateProfile from "./UpdateProfile";
 import { useState } from "react";
+import Profile from "./Profile";
 
 function App() {
   const[userId, setUserId] = useState();
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forget-password" element={<ForgetPassword />} />
+                <Route path="/profile" element={<Profile/>} />
               </Routes>
             </AuthProvider>
           </BrowserRouter>

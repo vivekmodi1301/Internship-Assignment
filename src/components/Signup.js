@@ -63,7 +63,7 @@ export default function Signup() {
             }).catch(function(err){
                 alert("Data can't be added")
             })
-            history("/")
+            history("/profile")
         }catch{
             setError("Failed to create an account or the user already exists ")
         }

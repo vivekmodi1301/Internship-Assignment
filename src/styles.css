@@ -13,4 +13,16 @@ i {
     height: 50px;
     margin: 0 auto;
   }
+
+  .avatar12{
+    vertical-align: middle;
+    width: 200px;
+    height:200px;
+    border-radius: 50%;
+    border-width: 5px;
+    border-color: gray;
+    border-style: outset;
+    margin-top: 1.5rem;
+    margin-left: 3rem;
+  }
   
