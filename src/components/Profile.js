@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Card , Form , Button, Alert } from 'react-bootstrap'
 import '../styles.css'
 import { useAuth } from '../contexts/AuthContext'
@@ -10,6 +10,8 @@ const Profile = () => {
     const [loading , setLoading] = useState(false)
     const history = useNavigate();
     const [photoURL , setPhotoURL] = useState("https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg");
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
     function handleChange(e){
         if(e.target.files[0]){
             setPhoto(e.target.files[0])
@@ -17,7 +19,7 @@ const Profile = () => {
     }
     function handleClick(){
         upload(photo,currentUser,setLoading)
-        history("/")
+        history("/profile")
     }
     function handleSkip(){
         history("/")
@@ -31,11 +33,13 @@ const Profile = () => {
   return (
     <div>
         <input type="file" onChange={handleChange}/>
-        <Button disabled={loading || !photo} className="mt-3" onClick={handleClick}>Upload</Button><br/>
+        <Button disabled={loading || !photo} className="mt-3" onClick={()=>{
+            handleClick();
+            forceUpdate();
+        }}>Upload</Button><br/>
         <Button className="mt-3" onClick={handleSkip}>Go To Dashboard</Button><br/>
         <img src={photoURL} alt="Avatar" className="avatar12"/>
     </div>
   )
 }
-
 export default Profile

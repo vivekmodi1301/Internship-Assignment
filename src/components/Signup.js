@@ -94,7 +94,7 @@ export default function Signup() {
                     <Form.Group id="password-confirmation">
                         <Form.Label>Password Confirmation</Form.Label>
                         <Form.Control type={passwordShown ? "text" : "password"} required ref={passwordConfirmRef} autoComplete="off" />
-                        <i onClick={togglePassword}>{eye}</i>
+                        <i className="hideshowsignup" onClick={togglePassword}>{eye}</i>
                     </Form.Group>
 
                     <Form.Group id="contact">

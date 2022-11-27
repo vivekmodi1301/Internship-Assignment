@@ -28,7 +28,7 @@ export default function Dashboard({getUserId}) {
     const data = await userDataService.getAllUsers();
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id})));
   };
-  function handleProfile(){
+  function handleTodo(){
     history("/profile")
   }
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function Dashboard({getUserId}) {
             if(doc.email === currentUser.email) {
               return (
                 <>
-                <img src={photoURL} width="100px" height="100px" style={{borderRadius : "50%" , border: '4px solid gray' ,  }} alt="Profile" className="avatar" /><br/>
+                <img src={photoURL} width="200px" height="200px" style={{borderRadius : "50%" , border: '4px solid gray' ,marginLeft:"80px"  }} alt="Profile" className="avatar" /><br/>
                 <strong>Name:</strong> {doc.name} <br />
                 <strong>Email:</strong> {doc.email} <br />
                 <strong>Contact:</strong> {doc.contact} <br />
@@ -59,7 +59,7 @@ export default function Dashboard({getUserId}) {
       </Card>
       <div className="w-100 text-center mt-2">
         <Button variant="link" onClick={handleLogout}>Log Out</Button>
-        <Button style={{marginTop : "-20px"}} variant="link" onClick={handleProfile}>View / Update Profile Pic</Button>
+        <Button style={{marginTop : "-20px"}} variant="link" onClick={handleTodo}>TODO</Button>
       </div>
     </>
   )

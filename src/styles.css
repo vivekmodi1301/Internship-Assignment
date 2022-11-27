@@ -1,4 +1,4 @@
-i {
+.hideshowsignup {
     position: absolute;
     top: 64%;
     right: 10%;
@@ -7,6 +7,18 @@ i {
     color: #0d6efd;
     cursor: pointer;
   }
+
+  .showhide {
+    position: absolute;
+    top: 56%;
+    right: 10%;
+  }
+
+  /* .showhide : hover {
+    position: absolute;
+    top: 64%;
+    right: 10%;
+  } */
   
   button {
     width: 300px;
@@ -23,6 +35,14 @@ i {
     border-color: gray;
     border-style: outset;
     margin-top: 1.5rem;
-    margin-left: 3rem;
+    margin-left: 76px;
   }
   
+  .indent{
+    display: flex;
+    flex-direction: row;
+  }
+  
+.noHover{
+    cursor: not-allowed;
+}
