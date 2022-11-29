@@ -11,15 +11,22 @@ import ForgetPassword from "./ForgetPassword";
 import UpdateProfile from "./UpdateProfile";
 import { useState } from "react";
 import Profile from "./Profile";
+import AddTodo from "./AddTodo";
+import TodoList from "./TodoList";
 
 function App() {
   const[userId, setUserId] = useState();
+  const[todoId , setTodoId] = useState();
   const getUserIdHandler =(id) => {
     console.log("User Id is: ", id)
     setUserId(id);
   }
+  const getTodoIdHandler =(id) => {
+    console.log("The ID of document to be edited: ", id);
+    setTodoId(id);
+  }
   return (
-      <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh"}}>
+    <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh"}}>
         <div className="w-100" style={{maxWidth : "400px"}}>
           <BrowserRouter>
             <AuthProvider>
@@ -30,6 +37,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/forget-password" element={<ForgetPassword />} />
                 <Route path="/profile" element={<Profile/>} />
+                <Route path="/todo" element={<PrivateRoute><AddTodo id={todoId} setTodoId={setTodoId} /><TodoList getTodoId={getTodoIdHandler}/></PrivateRoute>} />
               </Routes>
             </AuthProvider>
           </BrowserRouter>

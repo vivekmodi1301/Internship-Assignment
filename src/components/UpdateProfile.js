@@ -63,8 +63,9 @@ export default function UpdateProfile({ id, setUserId }) {
       useEffect(() => {
         if (id !== undefined && id !== "") {
             editHandler();
+            console.log("Your id is "+id)
         }
-      }, [id , reducerValue])
+      }, [id])
 
     function handleChange(e){
         if(e.target.files[0]){
@@ -94,7 +95,7 @@ export default function UpdateProfile({ id, setUserId }) {
             <Card.Body>
                 <h2 className='text-center mb-4'>Update Profile</h2>
                 {error && <Alert variant='danger'>{error}</Alert>}
-                <Form onSubmit={submitHandler()}>
+                <Form onSubmit={submitHandler}>
                     <img src={photoURL} alt="Avatar" className="avatar12" />
                     <Form.Group id="profile">
                         {/* <Form.Label>Profile</Form.Label>

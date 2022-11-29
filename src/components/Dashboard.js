@@ -29,7 +29,7 @@ export default function Dashboard({getUserId}) {
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id})));
   };
   function handleTodo(){
-    history("/profile")
+    history("/todo")
   }
   useEffect(() => {
     if(currentUser?.photoURL) {
@@ -51,6 +51,7 @@ export default function Dashboard({getUserId}) {
                 <strong>Contact:</strong> {doc.contact} <br />
                 <strong>ID:</strong> {doc.id} <br />
                 <NavLink to="/update-profile" className="btn btn-primary w-100 mt-3" onClick={(e) => getUserId(doc.id)}>Update Profile</NavLink>
+                <NavLink to="/todo" className="btn btn-primary w-100 mt-3" onClick={(e) => getUserId(doc.id)}>Your TODO</NavLink>
                 </>
               )
             }
@@ -60,6 +61,7 @@ export default function Dashboard({getUserId}) {
       <div className="w-100 text-center mt-2">
         <Button variant="link" onClick={handleLogout}>Log Out</Button>
         <Button style={{marginTop : "-20px"}} variant="link" onClick={handleTodo}>TODO</Button>
+        {/* <NavLink to="/update-profile" onClick={(e) => getUserId(doc.id)}>Update Profile</NavLink> */}
       </div>
     </>
   )

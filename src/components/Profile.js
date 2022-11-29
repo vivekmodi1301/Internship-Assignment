@@ -31,7 +31,7 @@ const Profile = () => {
         }
     },[currentUser])
   return (
-    <div>
+    <>
         <input type="file" onChange={handleChange}/>
         <Button disabled={loading || !photo} className="mt-3" onClick={()=>{
             handleClick();
@@ -39,7 +39,7 @@ const Profile = () => {
         }}>Upload</Button><br/>
         <Button className="mt-3" onClick={handleSkip}>Go To Dashboard</Button><br/>
         <img src={photoURL} alt="Avatar" className="avatar12"/>
-    </div>
+    </>
   )
 }
 export default Profile
