@@ -1,29 +1,38 @@
 import React, { useRef, useState } from "react";
-import { Card, Form, Button, Alert } from "react-bootstrap";
+import { Alert, Button, Card, Form, NavLink } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { NavLink, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const eye = <FontAwesomeIcon icon={faEye} />;
 
-export default function Login() {
+const AdminLogin = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [passwordShown, setPasswordShown] = useState(false);
   async function handleSubmit(e) {
     e.preventDefault();
+
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      history("/");
+      if (
+        emailRef.current.value === "test@test.com" &&
+        passwordRef.current.value === "pass@123"
+      ) {
+        await login(emailRef.current.value, passwordRef.current.value);
+        navigate("/admin-panel");
+      } else {
+        setError("Failed to sign in!");
+      }
     } catch {
-      setError("Failed to Log In");
+      setError("Failed to sign in!");
     }
+
     setLoading(false);
   }
   const togglePassword = () => {
@@ -31,12 +40,14 @@ export default function Login() {
     // inverse the boolean state of passwordShown
     setPasswordShown(!passwordShown);
   };
-
+  function handleLogin() {
+    navigate("/login");
+  }
   return (
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Log In</h2>
+          <h2 className="text-center mb-4">Admin Log In</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
@@ -61,16 +72,17 @@ export default function Login() {
             </Button>
           </Form>
           <div className="w=100 text-center mt-2">
-            <NavLink to="/forget-password">Forget Password?</NavLink>
+            <NavLink to="/login">Forget Password?</NavLink>
           </div>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
-        Need an account? <NavLink to="/signup">Sign Up</NavLink>
-      </div>
-      <div className="w-100 text-center mt-3">
-        <NavLink to="/admin-login">Login as admin</NavLink>
+      <div className="w=100 text-center mt-2">
+        <Button onClick={handleLogin} variant="link">
+          Go To Login
+        </Button>
       </div>
     </>
   );
-}
+};
+
+export default AdminLogin;

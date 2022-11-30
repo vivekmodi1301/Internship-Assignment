@@ -13,6 +13,10 @@ import { useState } from "react";
 import Profile from "./Profile";
 import AddTodo from "./AddTodo";
 import TodoList from "./TodoList";
+import AdminLogin from "./AdminLogin";
+import AdminPanel from "./AdminPanel";
+import AdminRoute from "./AdminRoute";
+import TodoTable from "./TodoTable";
 
 function App() {
   const[userId, setUserId] = useState();
@@ -38,6 +42,9 @@ function App() {
                 <Route path="/forget-password" element={<ForgetPassword />} />
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/todo" element={<PrivateRoute><AddTodo id={todoId} setTodoId={setTodoId} /><TodoList getTodoId={getTodoIdHandler}/></PrivateRoute>} />
+                <Route path="/admin-login" element={<AdminLogin />} />
+                <Route path="/admin-panel" element={<AdminRoute><AdminPanel /></AdminRoute> } />
+                <Route path="/todo-table" element={<AdminRoute><TodoTable /></AdminRoute> } />
               </Routes>
             </AuthProvider>
           </BrowserRouter>
